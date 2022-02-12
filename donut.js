@@ -56,9 +56,9 @@ export class Donut{
     rotation(){
         //let xspeed = 2*Math.PI*this.t/360000;
         //let yspeed = 2*Math.PI*this.t/180;
-        this.xAngle = -2*Math.PI/1000;
-        this.yAngle = 2*Math.PI/6000;
-        this.zAngle = 2*Math.PI/5000;
+        this.xAngle = -2*Math.PI/500;
+        this.yAngle = 2*Math.PI/3000;
+        this.zAngle = 2*Math.PI/2500;
 
         //console.log(this.xAngle+"   "+this.yAngle);
 
