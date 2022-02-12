@@ -136,7 +136,7 @@ export class Donut{
                         this.ctx.arc(
                             xscreen, //* ratio_w,
                             yscreen, //* ratio_h,
-                            20*orr,
+                            40*orr,
                             0 * 2/8 * Math.PI, 8 * 2/8 * Math.PI  
                             );
                         this.ctx.fill();
@@ -147,7 +147,7 @@ export class Donut{
                 this.ctx.arc(
                     xscreen, //* ratio_w,
                     yscreen, //* ratio_h,
-                    20*orr,
+                    40*orr,
                     0 * 2/8 * Math.PI, 8 * 2/8 * Math.PI  
                     );
                 this.ctx.fill();
