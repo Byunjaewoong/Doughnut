@@ -79,9 +79,9 @@ export class Donut{
     rotation(){
         //let xspeed = 2*Math.PI*this.t/360000;
         //let yspeed = 2*Math.PI*this.t/180;
-        this.xAngle = -2*Math.PI/1000;
-        this.yAngle = 2*Math.PI/6000;
-        this.zAngle = 2*Math.PI/5000;
+        this.xAngle = -2*Math.PI/100;
+        this.yAngle = 2*Math.PI/600;
+        this.zAngle = 2*Math.PI/500;
 
         //console.log(this.xAngle+"   "+this.yAngle);
 
@@ -150,6 +150,7 @@ export class Donut{
                 }*/
                 let orr = 1/(this.k2+this.comboStack[i][0][0][1]);
 
+<<<<<<< HEAD
                 //this.ctx.fillStyle = "rgba(" +r_c+ "," +g_c+ "," +b_c+ ",1)";
                 
                 if(L>0){
@@ -176,6 +177,42 @@ export class Donut{
                         );
                     this.ctx.fill();
                 }
+=======
+            //let L = Calculate.vectorProduct(this.luminStack[i][0][0],this.luminStack[i][0][1],this.luminStack[i][0][2]
+            let L = Calculate.vectorProduct(this.comboStack[i][1][0][0],this.comboStack[i][1][0][1],this.comboStack[i][1][0][2]
+                ,-1/Math.sqrt(3),-1/Math.sqrt(3),1/Math.sqrt(3));
+            
+            if((this.k2+this.comboStack[i][0][0][1])<0){
+            console.log(this.k2+this.comboStack[i][0][0][1]);
+            }
+            let orr = 1/(this.k2+this.comboStack[i][0][0][1]);
+
+            //this.ctx.fillStyle = "rgba(" +r_c+ "," +g_c+ "," +b_c+ ",1)";
+            
+            if(L>0){
+                L = L*L;                
+                let colorindex = 255*L;
+             this.ctx.fillStyle = "rgba("+ colorindex +","+ colorindex +","+ colorindex +",1)";
+                        this.ctx.beginPath();
+                        this.ctx.arc(
+                            xscreen, //* ratio_w,
+                            yscreen, //* ratio_h,
+                            40*orr,
+                            0 * 2/8 * Math.PI, 8 * 2/8 * Math.PI  
+                            );
+                        this.ctx.fill();
+            }
+            else{
+                this.ctx.fillStyle = "rgba(0,0,0,1)";
+                this.ctx.beginPath();
+                this.ctx.arc(
+                    xscreen, //* ratio_w,
+                    yscreen, //* ratio_h,
+                    40*orr,
+                    0 * 2/8 * Math.PI, 8 * 2/8 * Math.PI  
+                    );
+                this.ctx.fill();
+>>>>>>> fc1ac1c228881c0c25578ea1cfa083a3fc8c6c40
             }
             
         }

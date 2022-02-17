@@ -14,6 +14,7 @@ class App {
         window.requestAnimationFrame(this.animate.bind(this));
         this.e = 0 ;
         //this.donut = new Donut(this.canvas,this.stageWidth,this.stageHeight,this.e,1,2,this.stageWidth/2,this.stageHeight/2,500,4,144,288,2*Math.PI/360,2*Math.PI/360);
+<<<<<<< HEAD
 
         //overseer 2 Dount distant
         this.L2donut = 7;
@@ -51,6 +52,9 @@ class App {
         });
 
         this.donut = new Donut(this.mode,this.canvas,this.stageWidth,this.stageHeight,this.e,this.donutinternalSize,this.donutOuterSize,this.stageWidth/2,this.stageHeight/2,this.magfactor,this.L2donut,this.resolutionCircle,this.resolutionTube,this.xAngle,this.yAngle,this.zAngle);
+=======
+        this.donut = new Donut(this.canvas,this.stageWidth,this.stageHeight,this.e,1,2,this.stageWidth/2,this.stageHeight/2,500,6,100,200,2*Math.PI/360,2*Math.PI/360);
+>>>>>>> fc1ac1c228881c0c25578ea1cfa083a3fc8c6c40
         //this.donut.rotation();
         console.log(this.stageWidth/2+"   "+this.stageHeight/2);
     }
