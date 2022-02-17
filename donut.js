@@ -1,7 +1,7 @@
 import {Calculate} from "./tool.js"
 
 export class Donut{
-    constructor(canvas,stageWidth,stageHeight,event,r1,r2,xp,yp,k1,k2,anglestep,anglestep2,xAngle,yAngle){
+    constructor(mode,canvas,stageWidth,stageHeight,event,r1,r2,xp,yp,k1,k2,anglestep,anglestep2,xAngle,yAngle,zAngle){
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
         this.stageHeight = stageHeight;
@@ -24,6 +24,17 @@ export class Donut{
         this.xAngle = xAngle;
         this.yAngle = yAngle;
         this.t = 0;
+        this.mode = mode;
+
+        this.fontsize = 10;
+        this.asciiWidth = Math.round(this.stageWidth/this.fontsize);
+        this.asciiHeight = Math.round(this.stageHeight/this.fontsize);
+        this.asciiWidthXp = Math.round(this.xp/this.fontsize);
+        this.asciiWidthYp = Math.round(this.yp/this.fontsize);
+
+        this.asciiIndex = [' ','.',',',"-","~",":",";","=","!","*","#","$","@"];
+
+        console.log(this.asciiIndex[3]);
 
         this.calDonut();
     }
@@ -50,7 +61,19 @@ export class Donut{
             console.log(this.comboStack[i][0][0][2]);
         }*/
 
+        this.asciiScreenArr = new Array(this.asciiWidth);
+        for(let i=0;i<this.asciiWidth;i++){
+            this.asciiScreenArr[i] = new Array(this.asciiHeight);
+        }
 
+        for(let i=0;i<this.asciiWidth;i++){
+            for(let j=0;j<this.asciiHeight;j++){
+                this.asciiScreenArr[i][j] = new Array(2);
+                this.asciiScreenArr[i][j][0] = -1;
+                this.asciiScreenArr[i][j][1] = 0;
+            }
+        }
+        
     }
 
     rotation(){
@@ -106,61 +129,105 @@ export class Donut{
     }
 //canvas cordinate
     
-    drawDonut(){
+    drawDonut(mode){
         //console.log(this.dotStack[0]);
+        this.mode = mode;
+        if(this.mode == 0){
+            for(let i=0;i<this.dotStack.length;i++){
+                //let x_persp = this.dotStack[i][0][0]*this.k1/(this.k2+this.dotStack[i][0][2]);
+                let x_persp = this.comboStack[i][0][0][0]*this.k1/(this.k2+this.comboStack[i][0][0][1]);
+                //let y_persp = this.dotStack[i][0][1]*this.k1/(this.k2+this.dotStack[i][0][2]);
+                let y_persp = this.comboStack[i][0][0][2]*this.k1/(this.k2+this.comboStack[i][0][0][1]);
+                let xscreen = x_persp + this.xp;
+                let yscreen = y_persp + this.yp;
 
-        for(let i=0;i<this.dotStack.length;i++){
-            //let x_persp = this.dotStack[i][0][0]*this.k1/(this.k2+this.dotStack[i][0][2]);
-            let x_persp = this.comboStack[i][0][0][0]*this.k1/(this.k2+this.comboStack[i][0][0][1]);
-            //let y_persp = this.dotStack[i][0][1]*this.k1/(this.k2+this.dotStack[i][0][2]);
-            let y_persp = this.comboStack[i][0][0][2]*this.k1/(this.k2+this.comboStack[i][0][0][1]);
-            let xscreen = x_persp + this.xp;
-            let yscreen = y_persp + this.yp;
+                //let L = Calculate.vectorProduct(this.luminStack[i][0][0],this.luminStack[i][0][1],this.luminStack[i][0][2]
+                let L = Calculate.vectorProduct(this.comboStack[i][1][0][0],this.comboStack[i][1][0][1],this.comboStack[i][1][0][2]
+                    ,-1/Math.sqrt(3),-1/Math.sqrt(3),1/Math.sqrt(3));
+                
+                /*if((this.k2+this.comboStack[i][0][0][1])<0){
+                console.log(this.k2+this.comboStack[i][0][0][1]);
+                }*/
+                let orr = 1/(this.k2+this.comboStack[i][0][0][1]);
 
-            //let L = Calculate.vectorProduct(this.luminStack[i][0][0],this.luminStack[i][0][1],this.luminStack[i][0][2]
-            let L = Calculate.vectorProduct(this.comboStack[i][1][0][0],this.comboStack[i][1][0][1],this.comboStack[i][1][0][2]
-                ,-1/Math.sqrt(3),-1/Math.sqrt(3),1/Math.sqrt(3));
-            
-            if((this.k2+this.comboStack[i][0][0][1])<0){
-            console.log(this.k2+this.comboStack[i][0][0][1]);
+                //this.ctx.fillStyle = "rgba(" +r_c+ "," +g_c+ "," +b_c+ ",1)";
+                
+                if(L>0){
+                    L = L*L;                
+                    let colorindex = 255*L;
+                this.ctx.fillStyle = "rgba("+ colorindex +","+ colorindex +","+ colorindex +",1)";
+                            this.ctx.beginPath();
+                            this.ctx.arc(
+                                xscreen, //* ratio_w,
+                                yscreen, //* ratio_h,
+                                20*orr,
+                                0 * 2/8 * Math.PI, 8 * 2/8 * Math.PI  
+                                );
+                            this.ctx.fill();
+                }
+                else{
+                    this.ctx.fillStyle = "rgba(0,0,0,1)";
+                    this.ctx.beginPath();
+                    this.ctx.arc(
+                        xscreen, //* ratio_w,
+                        yscreen, //* ratio_h,
+                        20*orr,
+                        0 * 2/8 * Math.PI, 8 * 2/8 * Math.PI  
+                        );
+                    this.ctx.fill();
+                }
             }
-            let orr = 1/(this.k2+this.comboStack[i][0][0][1]);
+            
+        }
+        if(this.mode==1){
 
-            //this.ctx.fillStyle = "rgba(" +r_c+ "," +g_c+ "," +b_c+ ",1)";
-            
-            if(L>0){
-                L = L*L;                
-                let colorindex = 255*L;
-             this.ctx.fillStyle = "rgba("+ colorindex +","+ colorindex +","+ colorindex +",1)";
-                        this.ctx.beginPath();
-                        this.ctx.arc(
-                            xscreen, //* ratio_w,
-                            yscreen, //* ratio_h,
-                            20*orr,
-                            0 * 2/8 * Math.PI, 8 * 2/8 * Math.PI  
-                            );
-                        this.ctx.fill();
+            for(let i=0;i<this.dotStack.length;i++){
+                //let x_persp = this.dotStack[i][0][0]*this.k1/(this.k2+this.dotStack[i][0][2]);
+                let x_persp = Math.round((this.comboStack[i][0][0][0]*this.k1/(this.k2+this.comboStack[i][0][0][1])/this.fontsize));
+                //let y_persp = this.dotStack[i][0][1]*this.k1/(this.k2+this.dotStack[i][0][2]);
+                let y_persp = Math.round((this.comboStack[i][0][0][2]*this.k1/(this.k2+this.comboStack[i][0][0][1])/this.fontsize));
+                let zbuff = 1/(this.k2+this.comboStack[i][0][0][1]);
+
+                
+
+                let xscreen = x_persp + this.asciiWidthXp;
+                let yscreen = y_persp + this.asciiWidthYp;
+
+                //console.log(xscreen+"   "+yscreen);
+
+                //let L = Calculate.vectorProduct(this.luminStack[i][0][0],this.luminStack[i][0][1],this.luminStack[i][0][2]
+                let L = Calculate.vectorProduct(this.comboStack[i][1][0][0],this.comboStack[i][1][0][1],this.comboStack[i][1][0][2]
+                    ,-1/Math.sqrt(3),-1/Math.sqrt(3),1/Math.sqrt(3));
+                
+                if(L>0){
+                    if(this.asciiScreenArr[xscreen][yscreen][0]<zbuff){
+                        //console.log(Math.round(L*1)+1);
+                        this.asciiScreenArr[xscreen][yscreen][1] = Math.round(L*10)+2;
+                    }        
+                }
+                else{
+                    this.asciiScreenArr[xscreen][yscreen][1] = 1;
+                }
+                
+            } 
+
+            for(let i=0;i<this.asciiWidth;i++){
+                for(let j=0;j<this.asciiHeight;j++){   
+                       
+                    let xscreen = i * this.fontsize;
+                    let yscreen = j * this.fontsize;
+                    let num = this.asciiScreenArr[i][j][1];
+                    this.filltext(xscreen,yscreen,this.asciiIndex[num],this.fontsize);
+                    this.asciiScreenArr[i][j][1] = 0;
+                }
             }
-            else{
-                this.ctx.fillStyle = "rgba(0,0,0,1)";
-                this.ctx.beginPath();
-                this.ctx.arc(
-                    xscreen, //* ratio_w,
-                    yscreen, //* ratio_h,
-                    20*orr,
-                    0 * 2/8 * Math.PI, 8 * 2/8 * Math.PI  
-                    );
-                this.ctx.fill();
-            }
-            
-            //this.filltext(xscreen,yscreen,text);
         }
     }
 
-    filltext(x,y,lumicode){
-        this.ctx.font = "10px serif";
-        let colorindex = lumicode * 5;
-        this.ctx.fillStyle = "rgba("+colorindex+","+colorindex+",10,1)";
+    filltext(x,y,lumicode,fontsize){
+        this.ctx.font = ""+fontsize+"px serif";
+        let colorindex = 255;
+        this.ctx.fillStyle = "rgba("+colorindex+","+colorindex+","+colorindex+",1)";
         this.ctx.fillText(lumicode,x,y);
 
     }
