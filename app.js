@@ -30,9 +30,9 @@ class App {
         this.donutinternalSize = 1;
 
         //rotation angle
-        this.xAngle = -2*Math.PI/700;
-        this.yAngle = 2*Math.PI/300;
-        this.zAngle = -2*Math.PI/1400;
+        this.xAngle = -2*Math.PI/350;
+        this.yAngle = 2*Math.PI/150;
+        this.zAngle = -2*Math.PI/700;
 
         //mode
         this.mode = 0;
