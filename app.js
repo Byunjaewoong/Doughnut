@@ -16,10 +16,10 @@ class App {
         //this.donut = new Donut(this.canvas,this.stageWidth,this.stageHeight,this.e,1,2,this.stageWidth/2,this.stageHeight/2,500,4,144,288,2*Math.PI/360,2*Math.PI/360);
 
         //overseer 2 Dount distant
-        this.L2donut = 7;
+        this.L2donut = 10;
 
         //overserr 2 screen distant
-        this.magfactor = 400;
+        this.magfactor = 600;
 
         //donut resoultion
         this.resolutionCircle = 144;
@@ -30,12 +30,16 @@ class App {
         this.donutinternalSize = 1;
 
         //rotation angle
-        this.xAngle = -2*Math.PI/1000;
-        this.yAngle = 2*Math.PI/6000;
-        this.zAngle = 2*Math.PI/5000;
+        this.xAngle = -2*Math.PI/700;
+        this.yAngle = 2*Math.PI/300;
+        this.zAngle = -2*Math.PI/1400;
 
         //mode
         this.mode = 0;
+
+        //ascii fontsize
+
+        this.fontSize = 8;
 
         window.addEventListener("click", (e) => {
             //mode 변경
@@ -50,7 +54,7 @@ class App {
             
         });
 
-        this.donut = new Donut(this.mode,this.canvas,this.stageWidth,this.stageHeight,this.e,this.donutinternalSize,this.donutOuterSize,this.stageWidth/2,this.stageHeight/2,this.magfactor,this.L2donut,this.resolutionCircle,this.resolutionTube,this.xAngle,this.yAngle,this.zAngle);
+        this.donut = new Donut(this.mode,this.fontSize,this.canvas,this.stageWidth,this.stageHeight,this.e,this.donutinternalSize,this.donutOuterSize,this.stageWidth/2,this.stageHeight/2,this.magfactor,this.L2donut,this.resolutionCircle,this.resolutionTube,this.xAngle,this.yAngle,this.zAngle);
         //this.donut.rotation();
         console.log(this.stageWidth/2+"   "+this.stageHeight/2);
     }

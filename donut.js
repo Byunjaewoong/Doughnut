@@ -1,7 +1,7 @@
 import {Calculate} from "./tool.js"
 
 export class Donut{
-    constructor(mode,canvas,stageWidth,stageHeight,event,r1,r2,xp,yp,k1,k2,anglestep,anglestep2,xAngle,yAngle,zAngle){
+    constructor(mode,fontsize,canvas,stageWidth,stageHeight,event,r1,r2,xp,yp,k1,k2,anglestep,anglestep2,xAngle,yAngle,zAngle){
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
         this.stageHeight = stageHeight;
@@ -23,10 +23,12 @@ export class Donut{
         this.comboStack = [];
         this.xAngle = xAngle;
         this.yAngle = yAngle;
+        this.zAngle = zAngle;
+
         this.t = 0;
         this.mode = mode;
 
-        this.fontsize = 10;
+        this.fontsize = fontsize;
         this.asciiWidth = Math.round(this.stageWidth/this.fontsize);
         this.asciiHeight = Math.round(this.stageHeight/this.fontsize);
         this.asciiWidthXp = Math.round(this.xp/this.fontsize);
@@ -79,9 +81,7 @@ export class Donut{
     rotation(){
         //let xspeed = 2*Math.PI*this.t/360000;
         //let yspeed = 2*Math.PI*this.t/180;
-        this.xAngle = -2*Math.PI/100;
-        this.yAngle = 2*Math.PI/600;
-        this.zAngle = 2*Math.PI/500;
+        
 
         //console.log(this.xAngle+"   "+this.yAngle);
 
